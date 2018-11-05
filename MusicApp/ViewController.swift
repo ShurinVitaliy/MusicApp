@@ -8,18 +8,24 @@
 
 import UIKit
 
-class ViewController: UIViewController {
+class ViewController: UITableViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        let nib = UINib(nibName: "MusicCell", bundle: nil)
+        tableView.register(nib, forCellReuseIdentifier: "MusicCell")
+        
     }
-
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
+    
+    override func numberOfSections(in tableView: UITableView) -> Int {
+        return 3
     }
-
-
+    
+    override func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: "MusicCell", for: indexPath) as? MusicCell else { fatalError() }
+        cell.updateWithModel(MusicViewModel(title: String(indexPath.row)))
+        return cell
+    }
+    
 }
 
